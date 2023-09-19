@@ -11,16 +11,16 @@
 #include <chrono>
 
 // D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/CUDA/CUDA/
+// D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_assignment/CUDA/CUDA/
+#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_assignment/CUDA/CUDA/movie.h"
+#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_assignment/CUDA/CUDA/csv.h"
+#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_assignment/CUDA/CUDA/kmeans.h"
 
-#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/CUDA/CUDA/movie.h"
-#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/CUDA/CUDA/csv.h"
-#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/CUDA/CUDA/kmeans.h"
-
-using namespace std; // <-- Add this line
+using namespace std; 
 using namespace CsvProc;
 using namespace MovieData;
-const string trainFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/CUDA/CUDA/train_moviedata2.csv";
-const string testFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/CUDA/CUDA/test_moviedata2.csv";
+const string trainFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_assignment/CUDA/CUDA/train_moviedata2.csv";
+const string testFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_assignment/CUDA/CUDA/test_moviedata2.csv";
 
 
 
