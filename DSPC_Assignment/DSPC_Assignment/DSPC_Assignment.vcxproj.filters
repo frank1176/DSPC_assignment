@@ -30,6 +30,9 @@
     <ClCompile Include="kmeansOpenMP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="kmeansPthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csv.h">

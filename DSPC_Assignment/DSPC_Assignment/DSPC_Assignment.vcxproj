@@ -137,6 +137,7 @@
     <ClCompile Include="DSPC_Assignment.cpp" />
     <ClCompile Include="kmeans.cpp" />
     <ClCompile Include="kmeansOpenMP.cpp" />
+    <ClCompile Include="kmeansPthread.cpp" />
     <ClCompile Include="movie.cpp" />
   </ItemGroup>
   <ItemGroup>

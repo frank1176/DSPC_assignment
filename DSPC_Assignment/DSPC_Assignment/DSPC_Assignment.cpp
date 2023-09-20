@@ -9,59 +9,28 @@
 #include <math.h>
 #include <chrono>
 #include <omp.h>
-
-#include "C:\Users\yuton\OneDrive\Documents\GitHub\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\movie.h"
-#include "C:\Users\yuton\OneDrive\Documents\GitHub\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\csv.h"
-#include "C:\Users\yuton\OneDrive\Documents\GitHub\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\kmeans.h"
-
-
-
-
-//#include <cuda.h>
-//#include "cuda_runtime.h"
-//#include "device_launch_parameters.h"
+#include <thread>
+#include "movie.h"
+#include "csv.h"
+#include "kmeans.h"
+#include <mutex>
 
 using namespace std;
 using namespace CsvProc;
 using namespace MovieData;
 using namespace KmeansCluster;  
 
-//const string trainFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC/Try/Try/train_moviedata.csv";
-//const string testFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC/Try/Try/test_moviedata.csv";
-const string trainFile = "C:/Users/yuton/OneDrive/Documents/GitHub/DSPC_assignment/DSPC_Assignment/DSPC_Assignment/train_moviedata2.csv";
-const string testFile = "C:/Users/yuton/OneDrive/Documents/GitHub/DSPC_assignment/DSPC_Assignment/DSPC_Assignment/test_moviedata2.csv";
 
-//__global__ void assignClusters(float* data, float* centroids, int* assignments, int numPoints, int numCentroids, int dimensions) {
-//    int tid = threadIdx.x + blockIdx.x * blockDim.x;
-//
-//    if (tid < numPoints) {
-//        float minDist = 1e10;  // A large value
-//        int minIndex = -1;
-//
-//        for (int centroid = 0; centroid < numCentroids; centroid++) {
-//            float dist = 0.0;
-//
-//            for (int dim = 0; dim < dimensions; dim++) {
-//                float diff = data[tid * dimensions + dim] - centroids[centroid * dimensions + dim];
-//                dist += diff * diff;
-//            }
-//
-//            if (dist < minDist) {
-//                minDist = dist;
-//                minIndex = centroid;
-//            }
-//        }
-//
-//        assignments[tid] = minIndex;
-//    }
-//}
+const string trainFile = "train_moviedata2.csv";
+const string testFile = "test_moviedata2.csv";
+
 
 void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
     cout << "Movie Gross Predicter: " << endl;
     cout << "========================================" << endl;
     cout << "Enter 1 to run K-Means algorithm" << endl;
     cout << "Enter 2 to run K-Means algorithm(OpenMP)" << endl;
-    cout << "Enter 3 to run K-Means algorithm(CUDA)" << endl;
+    cout << "Enter 3 to run K-Means algorithm(PThreats)" << endl;
     cout << "========================================" << endl;
     cout << "Press any numbers aside from 1,2,3 to exit..." << endl;
     cout << "========================================" << endl;
@@ -98,7 +67,7 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
     }
 
     case 2: {
-        omp_set_num_threads(1);
+        omp_set_num_threads(12);
         chrono::high_resolution_clock::time_point time1 = chrono::high_resolution_clock::now();
 
         // Create an instance of KMeansOpenMP
@@ -125,45 +94,35 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
 
         cout << "K-Means OpenMP Average Error: " << (errPercent / count) * 100 << "%" << ", Approximate Runtime: " << duration << " milliseconds" << endl;
         cout << "========================================" << endl;
+        break;
     }
 
     //option 3
     case 3:
     {
-        //cout << "========================================" << endl;
-        //cout << "Kmeans CUDA" << endl;
-
-        //float* d_data;  // Pointer for data on the GPU
-        ////float* h_data;  // Assuming you define this elsewhere and fill it with the correct data.
-        //int number_of_data_points = 10000; // Define this appropriately.
-        //float* h_data = new float[number_of_data_points];
-
-        //int data_size = sizeof(float) * number_of_data_points;
-        //for (int i = 0; i < number_of_data_points; i++) {
-        //    h_data[i] = static_cast<float>(i);
-        //}
-        //cudaError_t err = cudaMalloc((void**)&d_data, data_size);  // Allocate memory on GPU
-        //if (err != cudaSuccess) {
-        //    cerr << "Error in cudaMalloc: " << cudaGetErrorString(err) << endl;
-        //    exit(-1);  // Exit the entire program
-        //}
-
-        //err = cudaMemcpy(d_data, h_data, data_size, cudaMemcpyHostToDevice);  // Copy data from host to device
-        //if (err != cudaSuccess) {
-        //    cerr << "Error in cudaMemcpy (host to device): " << cudaGetErrorString(err) << endl;
-        //    exit(-1);  // Exit the entire program
-        //}
-
-        //// ... computations ... (You should define and launch a CUDA kernel here)
-
-
-        //cudaFree(d_data);  // Free GPU memory
-        //delete[] h_data;
-        //cout << "Kmeans CUDA END" << endl;
-        //cout << "========================================" << endl;
 
         cout << "========================================" << endl;
-        cout << "Kmeans CUDA" << endl;
+        cout << "Kmeans Pthread 1308" << endl;
+        cout << "========================================" << endl;
+        chrono::high_resolution_clock::time_point time1 = chrono::high_resolution_clock::now();
+        KmeansPthread km3 = KmeansPthread();
+        // Initialize the KmeansPthread algorithm with train data
+        km3.initialize(train);
+
+        // Run the KmeansPthread clustering algorithm
+        km3.cluster();
+        
+        float errPercent = 0, count = 0;
+        for (Movie& m : test) {
+            float expected = km3.predict(m);
+            float actual = m[GROSS];
+            float difference = fabsf(expected - actual);
+            errPercent += (difference / expected);
+            ++count;
+        }
+        chrono::high_resolution_clock::time_point time2 = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1).count();
+        cout << "K-Means PThread Average Error: " << (errPercent / count) * 100 << "%" << ", Approximate Runtime: " << duration << " milliseconds" << endl;
         cout << "========================================" << endl;
         break;
     }

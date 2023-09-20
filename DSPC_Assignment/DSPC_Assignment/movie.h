@@ -45,6 +45,7 @@ namespace MovieData {
         const std::vector<float>& getAttributes() const {
             return attr;
         }
+
     };
 }
 
