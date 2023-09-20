@@ -8,17 +8,18 @@
 #include <string>
 #include <math.h>
 #include <chrono>
+#include <omp.h>
 
-#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_Assignment/DSPC_Assignment/movie.h"
-#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_Assignment/DSPC_Assignment/csv.h"
-#include "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_Assignment/DSPC_Assignment/kmeans.h"
+#include "C:\Users\yuton\OneDrive\Documents\GitHub\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\movie.h"
+#include "C:\Users\yuton\OneDrive\Documents\GitHub\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\csv.h"
+#include "C:\Users\yuton\OneDrive\Documents\GitHub\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\kmeans.h"
 
 
 
 
-#include <cuda.h>
-#include "cuda_runtime.h"
-#include "device_launch_parameters.h"
+//#include <cuda.h>
+//#include "cuda_runtime.h"
+//#include "device_launch_parameters.h"
 
 using namespace std;
 using namespace CsvProc;
@@ -27,8 +28,8 @@ using namespace KmeansCluster;
 
 //const string trainFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC/Try/Try/train_moviedata.csv";
 //const string testFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC/Try/Try/test_moviedata.csv";
-const string trainFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_Assignment/DSPC_Assignment/train_moviedata2.csv";
-const string testFile = "D:/TARC/Year3/sem7/Distributed Systems and Parallel Computing/DSPC_Assignment/DSPC_Assignment/test_moviedata2.csv";
+const string trainFile = "C:/Users/yuton/OneDrive/Documents/GitHub/DSPC_assignment/DSPC_Assignment/DSPC_Assignment/train_moviedata2.csv";
+const string testFile = "C:/Users/yuton/OneDrive/Documents/GitHub/DSPC_assignment/DSPC_Assignment/DSPC_Assignment/test_moviedata2.csv";
 
 //__global__ void assignClusters(float* data, float* centroids, int* assignments, int numPoints, int numCentroids, int dimensions) {
 //    int tid = threadIdx.x + blockIdx.x * blockDim.x;
@@ -96,11 +97,33 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
         break;
     }
 
-    //option 2
-    case 2:
-    {
-        cout << "========================================" << endl;
-        cout << "Kmeans OpenMP" << endl;
+    case 2: {
+        omp_set_num_threads(1);
+        chrono::high_resolution_clock::time_point time1 = chrono::high_resolution_clock::now();
+
+        // Create an instance of KMeansOpenMP
+        KMeansOpenMP km2 = KMeansOpenMP();
+
+        // Initialize the KMeansOpenMP algorithm with train data
+        km2.initialize(train);
+
+        // Run the KMeansOpenMP clustering algorithm
+        km2.cluster();
+
+        // Loop through and predict the gross for test data
+        float errPercent = 0, count = 0;
+        for (Movie& m : test) {
+            float expected = km2.predict(m);
+            float actual = m[GROSS];
+            float difference = fabsf(expected - actual);
+            errPercent += (difference / expected);
+            ++count;
+        }
+
+        chrono::high_resolution_clock::time_point time2 = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1).count();
+
+        cout << "K-Means OpenMP Average Error: " << (errPercent / count) * 100 << "%" << ", Approximate Runtime: " << duration << " milliseconds" << endl;
         cout << "========================================" << endl;
     }
 
@@ -155,6 +178,7 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
 
 
 int main(int argc, const char* argv[]) {
+   
     // initialize matrices and vectors needed
     vector<vector<float>>train, test;
     vector<Movie>trainset, testset;

@@ -113,7 +113,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cudart.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,6 +136,7 @@
     <ClCompile Include="csv.cpp" />
     <ClCompile Include="DSPC_Assignment.cpp" />
     <ClCompile Include="kmeans.cpp" />
+    <ClCompile Include="kmeansOpenMP.cpp" />
     <ClCompile Include="movie.cpp" />
   </ItemGroup>
   <ItemGroup>
