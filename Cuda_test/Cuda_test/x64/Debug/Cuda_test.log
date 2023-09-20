@@ -1,0 +1,10 @@
+﻿  Compiling CUDA source file kernel.cu...
+  
+  D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\Cuda_test>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\HostX64\x64" -x cu   -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\include"  -G   --keep-dir x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DWIN32 -DWIN64 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/Fdx64\Debug\vc143.pdb" -o "D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\Cuda_test\x64\Debug\kernel.cu.obj" "D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\Cuda_test\kernel.cu" 
+  kernel.cu
+  tmpxft_000088c0_00000000-7_kernel.cudafe1.cpp
+D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\Cuda_test\kernel.cu(209): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\Cuda_test\kernel.cu(244): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\Cuda_test\kernel.cu(251): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\Cuda_test\kernel.cu(293): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Cuda_test.vcxproj -> D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\Cuda_test\x64\Debug\Cuda_test.exe
