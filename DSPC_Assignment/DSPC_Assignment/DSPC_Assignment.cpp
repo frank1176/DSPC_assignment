@@ -30,7 +30,7 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
     cout << "========================================" << endl;
     cout << "Enter 1 to run K-Means algorithm" << endl;
     cout << "Enter 2 to run K-Means algorithm(OpenMP)" << endl;
-    cout << "Enter 3 to run K-Means algorithm(PThreats)" << endl;
+    cout << "Enter 3 to run K-Means algorithm(Thread)" << endl;
     cout << "========================================" << endl;
     cout << "Press any numbers aside from 1,2,3 to exit..." << endl;
     cout << "========================================" << endl;
@@ -91,7 +91,7 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
 
         chrono::high_resolution_clock::time_point time2 = chrono::high_resolution_clock::now();
         auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1).count();
-
+        cout << "========================================" << endl;
         cout << "K-Means OpenMP Average Error: " << (errPercent / count) * 100 << "%" << ", Approximate Runtime: " << duration << " milliseconds" << endl;
         cout << "========================================" << endl;
         break;
@@ -102,10 +102,10 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
     {
 
         cout << "========================================" << endl;
-        cout << "Kmeans Pthread 1308" << endl;
+        cout << "Kmeans thread" << endl;
         cout << "========================================" << endl;
         chrono::high_resolution_clock::time_point time1 = chrono::high_resolution_clock::now();
-        KmeansPthread km3 = KmeansPthread();
+        KmeansThread km3 = KmeansThread();
         // Initialize the KmeansPthread algorithm with train data
         km3.initialize(train);
 

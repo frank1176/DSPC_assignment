@@ -108,7 +108,7 @@ namespace KmeansCluster {
     };
 
 
-    class KmeansPthread {
+    class KmeansThread {
     private:
         //setup three clusters for the clustering and two for last centroids and current centroids
         std::vector<MovieData::Movie>cluster1, cluster2, cluster3, last, current, all;

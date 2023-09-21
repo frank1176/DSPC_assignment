@@ -30,7 +30,7 @@
     <ClCompile Include="kmeansOpenMP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="kmeansPthread.cpp">
+    <ClCompile Include="kmeansThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

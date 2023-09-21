@@ -1,5 +1,2 @@
-﻿  kmeansPthread.cpp
-D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\kmeansPthread.cpp(101,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\kmeansPthread.cpp(267,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\DSPC_assignment\DSPC_Assignment\DSPC_Assignment\kmeansPthread.cpp(270,31): warning C4018: '<': signed/unsigned mismatch
+﻿  DSPC_Assignment.cpp
   DSPC_Assignment.vcxproj -> D:\TARC\Year3\sem7\Distributed Systems and Parallel Computing\DSPC_assignment\DSPC_Assignment\x64\Debug\DSPC_Assignment.exe
