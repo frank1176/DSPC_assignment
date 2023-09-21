@@ -15,7 +15,7 @@
 #include <cmath>
 #include <iostream>
 #include <thread>
-#include <mutex>
+
 
 using namespace std;
 using namespace MovieData;
@@ -220,17 +220,10 @@ namespace KmeansCluster {
 
     //method to setup centroids
     bool KmeansThread::setupCentroids() {
-       
-
-        //cout << "Calculating mean for cluster1..." << endl;
         auto m1 = mean(cluster1);
-        
-   
-
         ////get the centroids of each initialized clusters
         Movie c1 = getCentroid(cluster1, mean(cluster1));
         Movie c2 = getCentroid(cluster2, mean(cluster2));
-
         Movie c3 = getCentroid(cluster3, mean(cluster3));
         cout << "Size of cluster1: " << cluster1.size() << endl;
         cout << "Size of cluster2: " << cluster2.size() << endl;
@@ -239,7 +232,6 @@ namespace KmeansCluster {
 
         //if current and last are the same then return
         if (current[0] == c1 && current[1] == c2 && current[2] == c3) return false;
-
         //otherwise clear the clusters and push back the clusters
         current[0] = c1;
         current[1] = c2;
@@ -259,22 +251,18 @@ namespace KmeansCluster {
     void KmeansThread::cluster() {
         int maxIterations = 10;
         int totalThreads = 3;
-
         auto processCluster = [&](int threadId) {
             int dataSizePerThread = all.size() / totalThreads;
             int startIdx = threadId * dataSizePerThread;
             int endIdx = startIdx + dataSizePerThread;
-
             int localCount = 0;
             while (setupCentroids() && localCount < maxIterations) {
                 for (int i = startIdx; i < endIdx; ++i) {
                     {
-                       
                         addToClosest(all[i]);
                     }  // Mutex will be unlocked when lock goes out of scope
                 }
                 localCount++;
-
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
         };
