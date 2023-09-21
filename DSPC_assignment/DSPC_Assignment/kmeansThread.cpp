@@ -225,11 +225,7 @@ namespace KmeansCluster {
         Movie c1 = getCentroid(cluster1, mean(cluster1));
         Movie c2 = getCentroid(cluster2, mean(cluster2));
         Movie c3 = getCentroid(cluster3, mean(cluster3));
-        cout << "Size of cluster1: " << cluster1.size() << endl;
-        cout << "Size of cluster2: " << cluster2.size() << endl;
-        cout << "Size of cluster3: " << cluster3.size() << endl;
-        cout << "Size of current: " << current.size() << endl;
-
+ 
         //if current and last are the same then return
         if (current[0] == c1 && current[1] == c2 && current[2] == c3) return false;
         //otherwise clear the clusters and push back the clusters

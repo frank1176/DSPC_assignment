@@ -100,15 +100,10 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
     //option 3
     case 3:
     {
-
-        cout << "========================================" << endl;
-        cout << "Kmeans thread" << endl;
-        cout << "========================================" << endl;
         chrono::high_resolution_clock::time_point time1 = chrono::high_resolution_clock::now();
         KmeansThread km3 = KmeansThread();
         // Initialize the KmeansPthread algorithm with train data
         km3.initialize(train);
-
         // Run the KmeansPthread clustering algorithm
         km3.cluster();
         
@@ -122,7 +117,8 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
         }
         chrono::high_resolution_clock::time_point time2 = chrono::high_resolution_clock::now();
         auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1).count();
-        cout << "K-Means PThread Average Error: " << (errPercent / count) * 100 << "%" << ", Approximate Runtime: " << duration << " milliseconds" << endl;
+        cout << "========================================" << endl;
+        cout << "K-Means Thread Average Error: " << (errPercent / count) * 100 << "%" << ", Approximate Runtime: " << duration << " milliseconds" << endl;
         cout << "========================================" << endl;
         break;
     }
