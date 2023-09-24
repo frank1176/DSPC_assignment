@@ -67,7 +67,7 @@ void runAlgorithm(vector<Movie>& train, vector<Movie>& test, Csv& t1, Csv& t2) {
     }
 
     case 2: {
-        omp_set_num_threads(12);
+        omp_set_num_threads(8);
         chrono::high_resolution_clock::time_point time1 = chrono::high_resolution_clock::now();
 
         // Create an instance of KMeansOpenMP

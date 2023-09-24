@@ -256,7 +256,7 @@ namespace KmeansCluster {
                 for (int i = startIdx; i < endIdx; ++i) {
                     {
                         addToClosest(all[i]);
-                    }  // Mutex will be unlocked when lock goes out of scope
+                    }
                 }
                 localCount++;
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
